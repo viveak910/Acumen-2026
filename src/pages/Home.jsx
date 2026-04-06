@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import CountdownTimer from '../components/CountdownTimer'
 import Navbar from '../components/Navbar'
@@ -18,22 +18,42 @@ const coordinators = [
   { name: 'Bhavana', role: 'Coordinator', initial: 'B' },
 ]
 
-function PersonCard({ name, role, initial }) {
+function PersonCard({ name, role, initial, index }) {
+  const [isVisible, setIsVisible] = useState(false)
+  const cardRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true)
+          observer.unobserve(entries[0].target)
+        }
+      },
+      { threshold: 0.1 }
+    )
+    if (cardRef.current) observer.observe(cardRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div style={{
-      background: '#ffffff',
-      border: `1px solid rgba(0,0,0,0.06)`,
-      borderRadius: '20px',
-      padding: '2rem 1.5rem',
-      textAlign: 'center',
-      width: '220px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '1rem',
-      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-      boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
-    }}
+    <div 
+      ref={cardRef}
+      className={`stagger-child ${isVisible ? 'visible' : ''}`}
+      style={{
+        background: '#ffffff',
+        border: `1px solid rgba(0,0,0,0.06)`,
+        borderRadius: '20px',
+        padding: '2rem 1.5rem',
+        textAlign: 'center',
+        width: '220px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '1rem',
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
+      }}
       onMouseEnter={e => {
         e.currentTarget.style.transform = 'translateY(-8px)'
         e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.06)'
@@ -66,6 +86,7 @@ function PersonCard({ name, role, initial }) {
 
 export default function Home() {
   const contentRef = useRef(null)
+  const [sectionInView, setSectionInView] = useState({})
 
   useEffect(() => {
     const elements = contentRef.current?.querySelectorAll('.animate-in')
@@ -76,9 +97,26 @@ export default function Home() {
         el.style.transition = `opacity 0.8s ease ${i * 0.12}s, transform 0.8s ease ${i * 0.12}s`
         el.style.opacity = '1'
         el.style.transform = 'translateY(0)'
-        // 4500ms delay ensures particles form completely before text appears
       }, 4500) 
     })
+
+    // Intersection observer for sections
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animation = `fadeInUp 0.8s ease forwards`
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    const sections = contentRef.current?.querySelectorAll('.section-animate')
+    sections?.forEach(section => observer.observe(section))
+
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -105,21 +143,31 @@ export default function Home() {
       {/* 3. HERO CONTENT SECTION 
           This section appears after the particles are formed.
       */}
-      <section style={{ padding: '6rem 1.5rem', textAlign: 'center', position: 'relative', zIndex: 2 }}>
-        <div className="animate-in" style={{ letterSpacing: '0.4em', color: '#888', fontSize: '0.8rem', marginBottom: '1.5rem' }}>
+      <section className="section-animate" style={{ padding: '6rem 1.5rem', textAlign: 'center', position: 'relative', zIndex: 2 }}>
+        <div className="animate-in" style={{ letterSpacing: '0.4em', color: '#888', fontSize: '0.8rem', marginBottom: '1.5rem', animation: 'slideInFromLeft 0.8s ease 4.5s forwards', opacity: 0 }}>
           VASAVI COLLEGE OF ENGINEERING (A)
         </div>
-        <h1 className="animate-in" style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '2rem' }}>
+        <h1 className="animate-in" style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '2rem', animation: 'fadeInDown 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 4.6s forwards', opacity: 0 }}>
           Unleash the Future of <br/> Information Technology
         </h1>
-        <p className="animate-in" style={{ maxWidth: '650px', margin: '0 auto 3rem', color: '#555', fontSize: '1.2rem', lineHeight: 1.6 }}>
+        <p className="animate-in" style={{ maxWidth: '650px', margin: '0 auto 3rem', color: '#555', fontSize: '1.2rem', lineHeight: 1.6, animation: 'slideInFromRight 0.8s ease 4.7s forwards', opacity: 0 }}>
           Experience a day of intense competition, technical workshops, and innovative displays at the premier annual IT symposium.
         </p>
-        <div className="animate-in">
+        <div className="animate-in" style={{ animation: 'scaleIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 4.8s forwards', opacity: 0 }}>
           <Link to="/register" style={{ 
             background: '#000', color: '#fff', padding: '1.2rem 3rem', 
             borderRadius: '100px', fontWeight: 600, textDecoration: 'none',
-            fontSize: '1.1rem', boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+            fontSize: '1.1rem', boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+            transition: 'all 0.3s ease',
+            display: 'inline-block'
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = 'translateY(-3px)'
+            e.currentTarget.style.boxShadow = '0 15px 45px rgba(0,0,0,0.2)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = 'translateY(0)'
+            e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)'
           }}>
             Explore Events ↗
           </Link>
@@ -127,7 +175,7 @@ export default function Home() {
       </section>
 
       {/* 4. COUNTDOWN SECTION */}
-      <section style={{ padding: '4rem 1.5rem', position: 'relative', zIndex: 2 }}>
+      <section className="section-animate" style={{ padding: '4rem 1.5rem', position: 'relative', zIndex: 2, opacity: 0 }}>
         <div className="animate-in" style={{
           background: '#ffffff',
           borderRadius: '40px',
@@ -136,6 +184,15 @@ export default function Home() {
           margin: '0 auto',
           textAlign: 'center',
           boxShadow: '0 40px 100px rgba(0,0,0,0.04)',
+          transition: 'all 0.4s ease',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.boxShadow = '0 50px 120px rgba(0,0,0,0.08)'
+          e.currentTarget.style.transform = 'translateY(-5px)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.boxShadow = '0 40px 100px rgba(0,0,0,0.04)'
+          e.currentTarget.style.transform = 'translateY(0)'
         }}>
           <h3 style={{ fontSize: '0.9rem', letterSpacing: '0.2em', color: '#999', marginBottom: '2rem' }}>SYMPOSIUM COUNTDOWN</h3>
           <CountdownTimer />
@@ -144,49 +201,50 @@ export default function Home() {
       </section>
 
       {/* 5. THE TEAM SECTION */}
-      <section style={{ padding: '8rem 1.5rem', position: 'relative', zIndex: 2 }}>
-        <div className="animate-in" style={{ textAlign: 'center', marginBottom: '5rem' }}>
-          <h2 style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.04em' }}>The Team</h2>
+      <section className="section-animate" style={{ padding: '8rem 1.5rem', position: 'relative', zIndex: 2, opacity: 0 }}>
+        <div className="animate-in" style={{ textAlign: 'center', marginBottom: '5rem', animation: 'fadeInUp 0.8s ease' }}>
+          <h2 style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.04em', marginBottom: '1rem' }}>The Team</h2>
           <p style={{ color: '#888', fontSize: '1.1rem' }}>The minds driving Acumen IT 2026</p>
         </div>
 
         {/* SUB-SECTION: MENTORS */}
-        <div className="animate-in" style={{ marginBottom: '6rem' }}>
+        <div className="animate-in" style={{ marginBottom: '6rem', animation: 'fadeInUp 0.8s ease 0.2s forwards', opacity: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '3rem', justifyContent: 'center' }}>
-            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px' }} />
+            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px', animation: 'slideInFromLeft 0.8s ease 0.3s forwards', opacity: 0 }} />
             <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#888' }}>
               Faculty Mentors
             </h3>
-            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px' }} />
+            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px', animation: 'slideInFromRight 0.8s ease 0.3s forwards', opacity: 0 }} />
           </div>
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', maxWidth: '1300px', margin: '0 auto' }}>
-            {mentors.map((m, i) => <PersonCard key={i} {...m} />)}
+            {mentors.map((m, i) => <PersonCard key={i} {...m} index={i} />)}
           </div>
         </div>
 
         {/* SUB-SECTION: COORDINATORS */}
-        <div className="animate-in">
+        <div className="animate-in" style={{ animation: 'fadeInUp 0.8s ease 0.4s forwards', opacity: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '3rem', justifyContent: 'center' }}>
-            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px' }} />
+            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px', animation: 'slideInFromLeft 0.8s ease 0.5s forwards', opacity: 0 }} />
             <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#888' }}>
               Student Coordinators
             </h3>
-            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px' }} />
+            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px', animation: 'slideInFromRight 0.8s ease 0.5s forwards', opacity: 0 }} />
           </div>
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', maxWidth: '1300px', margin: '0 auto' }}>
-            {coordinators.map((c, i) => <PersonCard key={i} {...c} />)}
+            {coordinators.map((c, i) => <PersonCard key={i} {...c} index={i + 4} />)}
           </div>
         </div>
       </section>
 
       {/* 6. FOOTER */}
-      <footer style={{
+      <footer className="section-animate" style={{
         padding: '5rem 1.5rem 3rem',
         background: '#F1EFE9', 
         borderTop: '1px solid rgba(0,0,0,0.1)',
         marginTop: '4rem',
         position: 'relative',
-        zIndex: 2
+        zIndex: 2,
+        opacity: 0
       }}>
         <div style={{ 
           maxWidth: '1200px', 
