@@ -40,27 +40,32 @@ export default function Navbar() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: 'rgba(255, 255, 255, 0.4)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          border: '1px solid rgba(0, 0, 0, 0.05)',
+          backgroundColor: 'rgba(20, 26, 58, 0.7)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(0, 217, 255, 0.2)',
           borderRadius: '30px',
           padding: '1.2rem',
-          boxShadow: '0 10px 40px rgba(0,0,0,0.03)',
+          boxShadow: '0 0 30px rgba(0, 217, 255, 0.1), 0 10px 40px rgba(0,0,0,0.3)',
           opacity: badgeVisible ? 1 : 0,
           transform: badgeVisible ? 'translateY(0)' : 'translateY(-10px)',
           pointerEvents: badgeVisible ? 'auto' : 'none',
           transition: 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
       }}>
         <span style={{
-          color: '#000',
+          background: 'linear-gradient(135deg, #00d9ff 0%, #7c3aed 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
           fontWeight: 800,
           fontFamily: 'var(--font-display)',
           fontSize: '1.6rem',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
           opacity: isHomePage ? 0 : 1, 
-          transition: 'opacity 0.3s ease'
+          transition: 'opacity 0.3s ease',
+          textShadow: '0 0 20px rgba(0, 217, 255, 0.3)',
+          filter: 'drop-shadow(0 0 10px rgba(0, 217, 255, 0.2))'
         }}>
           Acumen IT
         </span>
@@ -88,12 +93,12 @@ export default function Navbar() {
           <div 
             className={`menu-pill ${isOpen ? 'open' : ''}`}
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              backgroundColor: 'rgba(20, 26, 58, 0.8)',
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(0, 0, 0, 0.08)',
-              color: '#000',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
+              border: '1px solid rgba(0, 217, 255, 0.3)',
+              color: '#ffffff',
+              boxShadow: '0 0 30px rgba(0, 217, 255, 0.2), 0 10px 40px rgba(0,0,0,0.3)',
               transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
               display: 'flex',
               alignItems: 'center',

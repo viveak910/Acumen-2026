@@ -1,32 +1,33 @@
 /* ============================================
-   ACUMEN IT 2026 — Light Theme Design System
+   ACUMEN IT 2026 — Energetic Tech Fest Theme
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* Core Theme Colors (#F1EFE9 Base) */
-  --bg-primary: #F1EFE9;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #EAE8E0;
-  --bg-card: rgba(255, 255, 255, 0.7);
+  /* Core Theme Colors - Dark Tech Background */
+  --bg-primary: #0a0e27;
+  --bg-secondary: #141a3a;
+  --bg-tertiary: #1a2351;
+  --bg-card: rgba(20, 26, 58, 0.8);
 
-  /* Accents - Shifted from Neon to Solid Professional Tones */
-  --accent-primary: #000000;    /* Swiss-style high contrast */
-  --accent-secondary: #444444;  
-  --accent-muted: #888888;
-  --accent-danger: #e11d48;
+  /* Vibrant Tech Accents */
+  --accent-primary: #00d9ff;    /* Cyan */
+  --accent-secondary: #7c3aed;  /* Purple */
+  --accent-tertiary: #ec4899;   /* Pink */
+  --accent-success: #10b981;    /* Green */
+  --accent-danger: #ff006e;     /* Hot Pink */
 
   /* Text Colors */
-  --text-primary: #000000;
-  --text-secondary: #555555;
-  --text-muted: #999999;
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
 
   /* Borders & Glass */
-  --border-subtle: rgba(0, 0, 0, 0.06);
-  --border-strong: rgba(0, 0, 0, 0.15);
-  --glass-bg: rgba(255, 255, 255, 0.4);
-  --glass-border: rgba(0, 0, 0, 0.05);
+  --border-subtle: rgba(0, 217, 255, 0.1);
+  --border-strong: rgba(124, 58, 237, 0.2);
+  --glass-bg: rgba(20, 26, 58, 0.6);
+  --glass-border: rgba(0, 217, 255, 0.15);
 
   /* Typography */
   --font-display: 'Plus Jakarta Sans', sans-serif;
@@ -62,48 +63,63 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- Scrollbar (Minimalist) --- */
-::-webkit-scrollbar { width: 5px; }
+/* --- Scrollbar (Tech Style) --- */
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
   border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
 }
-::-webkit-scrollbar-thumb:hover { background: #000; }
+::-webkit-scrollbar-thumb:hover { 
+  background: linear-gradient(180deg, var(--accent-secondary), var(--accent-tertiary));
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+}
 
-/* --- Glassmorphism (Frosted Glass Style) --- */
+/* --- Glassmorphism (Tech Glow Style) --- */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px) saturate(120%);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.1), inset 0 1px 1px rgba(255,255,255,0.1);
 }
 
-/* --- Shadows instead of Glows --- */
+/* --- Tech Glow Effects --- */
 .glow-box {
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.2), 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .glow-box-strong {
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.3), 0 0 80px rgba(0, 217, 255, 0.2), 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-/* --- Gradient Text (Subtle Dark Gradients) --- */
+.glow-box-active {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* --- Gradient Text (Vibrant Neon Gradients) --- */
 .gradient-text {
-  background: linear-gradient(135deg, #000000 0%, #444444 100%);
+  background: linear-gradient(135deg, #00d9ff 0%, #7c3aed 50%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-shift 6s ease infinite;
 }
 
-/* --- Buttons (Premium Solid Design) --- */
+@keyframes gradient-shift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(20deg); }
+}
+
+/* --- Buttons (Glowing Tech Style) --- */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.9rem 2.2rem;
-  background: var(--accent-primary);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
   color: #ffffff;
   font-family: var(--font-display);
   font-weight: 700;
@@ -113,13 +129,25 @@ body {
   border-radius: 100px;
   cursor: pointer;
   transition: var(--transition-medium);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.4), 0 10px 25px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer-shine 3s infinite;
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  background: #222;
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.6), 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .btn-outline {
@@ -134,11 +162,14 @@ body {
   border-radius: 100px;
   text-decoration: none;
   transition: var(--transition-fast);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
 }
 
 .btn-outline:hover {
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(0, 217, 255, 0.1);
   transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(0, 217, 255, 0.4);
+  border-color: var(--accent-secondary);
 }
 
 /* --- Animations --- */
@@ -214,6 +245,44 @@ body {
   }
   100% {
     background-position: 1000px 0;
+  }
+}
+
+@keyframes shimmer-shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.4), 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 217, 255, 0.8), 0 10px 35px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(50px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(50px) rotate(-360deg);
   }
 }
 

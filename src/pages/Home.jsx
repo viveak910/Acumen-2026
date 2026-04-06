@@ -41,8 +41,8 @@ function PersonCard({ name, role, initial, index }) {
       ref={cardRef}
       className={`stagger-child ${isVisible ? 'visible' : ''}`}
       style={{
-        background: '#ffffff',
-        border: `1px solid rgba(0,0,0,0.06)`,
+        background: 'linear-gradient(135deg, rgba(20, 26, 58, 0.9) 0%, rgba(26, 35, 81, 0.9) 100%)',
+        border: `1px solid rgba(0, 217, 255, 0.3)`,
         borderRadius: '20px',
         padding: '2rem 1.5rem',
         textAlign: 'center',
@@ -52,33 +52,38 @@ function PersonCard({ name, role, initial, index }) {
         alignItems: 'center',
         gap: '1rem',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
+        boxShadow: '0 0 20px rgba(0, 217, 255, 0.1), 0 0 40px rgba(124, 58, 237, 0.05)',
+        backdropFilter: 'blur(10px)',
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.transform = 'translateY(-8px)'
-        e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.06)'
-        e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'
+        e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)'
+        e.currentTarget.style.boxShadow = '0 0 30px rgba(0, 217, 255, 0.3), 0 0 60px rgba(124, 58, 237, 0.1)'
+        e.currentTarget.style.borderColor = 'rgba(0, 217, 255, 0.6)'
+        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(20, 26, 58, 1) 0%, rgba(26, 35, 81, 1) 100%)'
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.transform = 'translateY(0)'
-        e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.02)'
-        e.currentTarget.style.borderColor = 'rgba(0,0,0,0.06)'
+        e.currentTarget.style.transform = 'translateY(0) scale(1)'
+        e.currentTarget.style.boxShadow = '0 0 20px rgba(0, 217, 255, 0.1), 0 0 40px rgba(124, 58, 237, 0.05)'
+        e.currentTarget.style.borderColor = 'rgba(0, 217, 255, 0.3)'
+        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(20, 26, 58, 0.9) 0%, rgba(26, 35, 81, 0.9) 100%)'
       }}
     >
       <div style={{
         width: 70, height: 70,
         borderRadius: '50%',
-        background: '#1a1a1a',
+        background: 'linear-gradient(135deg, #00d9ff 0%, #7c3aed 100%)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontWeight: 700,
         fontSize: '1.5rem',
-        color: '#F1EFE9',
+        color: '#ffffff',
+        boxShadow: '0 0 20px rgba(0, 217, 255, 0.4)',
+        animation: 'glow-pulse 3s ease-in-out infinite',
       }}>
         {initial}
       </div>
       <div>
-        <p style={{ fontWeight: 700, fontSize: '1rem', color: '#000', marginBottom: '0.25rem' }}>{name}</p>
-        <p style={{ fontSize: '0.75rem', color: '#666', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{role}</p>
+        <p style={{ fontWeight: 700, fontSize: '1rem', color: '#ffffff', marginBottom: '0.25rem' }}>{name}</p>
+        <p style={{ fontSize: '0.75rem', color: '#9ca3af', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{role}</p>
       </div>
     </div>
   )
@@ -120,7 +125,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main ref={contentRef} style={{ background: '#F1EFE9', color: '#1a1a1a', minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}>
+    <main ref={contentRef} style={{ background: '#0a0e27', color: '#ffffff', minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}>
       <Navbar />
       
       {/* 1. ANIMATION LAYER (Fixed in background) */}
@@ -144,30 +149,38 @@ export default function Home() {
           This section appears after the particles are formed.
       */}
       <section className="section-animate" style={{ padding: '6rem 1.5rem', textAlign: 'center', position: 'relative', zIndex: 2 }}>
-        <div className="animate-in" style={{ letterSpacing: '0.4em', color: '#888', fontSize: '0.8rem', marginBottom: '1.5rem', animation: 'slideInFromLeft 0.8s ease 4.5s forwards', opacity: 0 }}>
+        <div className="animate-in" style={{ letterSpacing: '0.4em', color: '#9ca3af', fontSize: '0.8rem', marginBottom: '1.5rem', animation: 'slideInFromLeft 0.8s ease 4.5s forwards', opacity: 0, textShadow: '0 0 10px rgba(0, 217, 255, 0.3)' }}>
           VASAVI COLLEGE OF ENGINEERING (A)
         </div>
-        <h1 className="animate-in" style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '2rem', animation: 'fadeInDown 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 4.6s forwards', opacity: 0 }}>
+        <h1 className="animate-in gradient-text" style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '2rem', animation: 'fadeInDown 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 4.6s forwards', opacity: 0, textShadow: '0 0 30px rgba(0, 217, 255, 0.2), 0 0 60px rgba(124, 58, 237, 0.1)' }}>
           Unleash the Future of <br/> Information Technology
         </h1>
-        <p className="animate-in" style={{ maxWidth: '650px', margin: '0 auto 3rem', color: '#555', fontSize: '1.2rem', lineHeight: 1.6, animation: 'slideInFromRight 0.8s ease 4.7s forwards', opacity: 0 }}>
+        <p className="animate-in" style={{ maxWidth: '650px', margin: '0 auto 3rem', color: '#d1d5db', fontSize: '1.2rem', lineHeight: 1.6, animation: 'slideInFromRight 0.8s ease 4.7s forwards', opacity: 0 }}>
           Experience a day of intense competition, technical workshops, and innovative displays at the premier annual IT symposium.
         </p>
         <div className="animate-in" style={{ animation: 'scaleIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 4.8s forwards', opacity: 0 }}>
           <Link to="/register" style={{ 
-            background: '#000', color: '#fff', padding: '1.2rem 3rem', 
-            borderRadius: '100px', fontWeight: 600, textDecoration: 'none',
-            fontSize: '1.1rem', boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+            background: 'linear-gradient(135deg, #00d9ff 0%, #7c3aed 100%)',
+            color: '#fff', 
+            padding: '1.2rem 3rem', 
+            borderRadius: '100px', 
+            fontWeight: 600, 
+            textDecoration: 'none',
+            fontSize: '1.1rem', 
+            boxShadow: '0 0 20px rgba(0, 217, 255, 0.4), 0 10px 30px rgba(0, 0, 0, 0.3)',
             transition: 'all 0.3s ease',
-            display: 'inline-block'
+            display: 'inline-block',
+            border: '1px solid rgba(0, 217, 255, 0.3)',
+            position: 'relative',
+            overflow: 'hidden'
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.transform = 'translateY(-3px)'
-            e.currentTarget.style.boxShadow = '0 15px 45px rgba(0,0,0,0.2)'
+            e.currentTarget.style.transform = 'translateY(-4px)'
+            e.currentTarget.style.boxShadow = '0 0 30px rgba(0, 217, 255, 0.6), 0 15px 45px rgba(0, 0, 0, 0.4)'
           }}
           onMouseLeave={e => {
             e.currentTarget.style.transform = 'translateY(0)'
-            e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)'
+            e.currentTarget.style.boxShadow = '0 0 20px rgba(0, 217, 255, 0.4), 0 10px 30px rgba(0, 0, 0, 0.3)'
           }}>
             Explore Events ↗
           </Link>
@@ -177,44 +190,48 @@ export default function Home() {
       {/* 4. COUNTDOWN SECTION */}
       <section className="section-animate" style={{ padding: '4rem 1.5rem', position: 'relative', zIndex: 2, opacity: 0 }}>
         <div className="animate-in" style={{
-          background: '#ffffff',
+          background: 'linear-gradient(135deg, rgba(20, 26, 58, 0.9) 0%, rgba(26, 35, 81, 0.9) 100%)',
           borderRadius: '40px',
           padding: '4rem 2rem',
           maxWidth: '900px',
           margin: '0 auto',
           textAlign: 'center',
-          boxShadow: '0 40px 100px rgba(0,0,0,0.04)',
+          boxShadow: '0 0 40px rgba(0, 217, 255, 0.2), 0 0 80px rgba(124, 58, 237, 0.1), 0 20px 60px rgba(0, 0, 0, 0.5)',
           transition: 'all 0.4s ease',
+          border: '1px solid rgba(0, 217, 255, 0.2)',
+          backdropFilter: 'blur(20px)',
         }}
         onMouseEnter={e => {
-          e.currentTarget.style.boxShadow = '0 50px 120px rgba(0,0,0,0.08)'
-          e.currentTarget.style.transform = 'translateY(-5px)'
+          e.currentTarget.style.boxShadow = '0 0 60px rgba(0, 217, 255, 0.4), 0 0 120px rgba(124, 58, 237, 0.2), 0 30px 80px rgba(0, 0, 0, 0.6)'
+          e.currentTarget.style.transform = 'translateY(-8px)'
+          e.currentTarget.style.borderColor = 'rgba(0, 217, 255, 0.5)'
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.boxShadow = '0 40px 100px rgba(0,0,0,0.04)'
+          e.currentTarget.style.boxShadow = '0 0 40px rgba(0, 217, 255, 0.2), 0 0 80px rgba(124, 58, 237, 0.1), 0 20px 60px rgba(0, 0, 0, 0.5)'
           e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.borderColor = 'rgba(0, 217, 255, 0.2)'
         }}>
-          <h3 style={{ fontSize: '0.9rem', letterSpacing: '0.2em', color: '#999', marginBottom: '2rem' }}>SYMPOSIUM COUNTDOWN</h3>
+          <h3 style={{ fontSize: '0.9rem', letterSpacing: '0.2em', color: '#9ca3af', marginBottom: '2rem', textShadow: '0 0 10px rgba(0, 217, 255, 0.3)' }}>SYMPOSIUM COUNTDOWN</h3>
           <CountdownTimer />
-          <p style={{ marginTop: '2.5rem', fontWeight: 600, color: '#333' }}>April 16, 2026 — Hyderabad, India</p>
+          <p style={{ marginTop: '2.5rem', fontWeight: 600, color: '#d1d5db' }}>April 16, 2026 — Hyderabad, India</p>
         </div>
       </section>
 
       {/* 5. THE TEAM SECTION */}
       <section className="section-animate" style={{ padding: '8rem 1.5rem', position: 'relative', zIndex: 2, opacity: 0 }}>
         <div className="animate-in" style={{ textAlign: 'center', marginBottom: '5rem', animation: 'fadeInUp 0.8s ease' }}>
-          <h2 style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.04em', marginBottom: '1rem' }}>The Team</h2>
-          <p style={{ color: '#888', fontSize: '1.1rem' }}>The minds driving Acumen IT 2026</p>
+          <h2 className="gradient-text" style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.04em', marginBottom: '1rem', textShadow: '0 0 30px rgba(0, 217, 255, 0.2), 0 0 60px rgba(124, 58, 237, 0.1)' }}>The Team</h2>
+          <p style={{ color: '#d1d5db', fontSize: '1.1rem' }}>The minds driving Acumen IT 2026</p>
         </div>
 
         {/* SUB-SECTION: MENTORS */}
         <div className="animate-in" style={{ marginBottom: '6rem', animation: 'fadeInUp 0.8s ease 0.2s forwards', opacity: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '3rem', justifyContent: 'center' }}>
-            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px', animation: 'slideInFromLeft 0.8s ease 0.3s forwards', opacity: 0 }} />
-            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#888' }}>
+            <div style={{ height: '1px', background: 'rgba(0, 217, 255, 0.2)', flex: 1, maxWidth: '100px', animation: 'slideInFromLeft 0.8s ease 0.3s forwards', opacity: 0 }} />
+            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#9ca3af', textShadow: '0 0 10px rgba(0, 217, 255, 0.3)' }}>
               Faculty Mentors
             </h3>
-            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px', animation: 'slideInFromRight 0.8s ease 0.3s forwards', opacity: 0 }} />
+            <div style={{ height: '1px', background: 'rgba(0, 217, 255, 0.2)', flex: 1, maxWidth: '100px', animation: 'slideInFromRight 0.8s ease 0.3s forwards', opacity: 0 }} />
           </div>
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', maxWidth: '1300px', margin: '0 auto' }}>
             {mentors.map((m, i) => <PersonCard key={i} {...m} index={i} />)}
@@ -224,11 +241,11 @@ export default function Home() {
         {/* SUB-SECTION: COORDINATORS */}
         <div className="animate-in" style={{ animation: 'fadeInUp 0.8s ease 0.4s forwards', opacity: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '3rem', justifyContent: 'center' }}>
-            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px', animation: 'slideInFromLeft 0.8s ease 0.5s forwards', opacity: 0 }} />
-            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#888' }}>
+            <div style={{ height: '1px', background: 'rgba(0, 217, 255, 0.2)', flex: 1, maxWidth: '100px', animation: 'slideInFromLeft 0.8s ease 0.5s forwards', opacity: 0 }} />
+            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#9ca3af', textShadow: '0 0 10px rgba(0, 217, 255, 0.3)' }}>
               Student Coordinators
             </h3>
-            <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)', flex: 1, maxWidth: '100px', animation: 'slideInFromRight 0.8s ease 0.5s forwards', opacity: 0 }} />
+            <div style={{ height: '1px', background: 'rgba(0, 217, 255, 0.2)', flex: 1, maxWidth: '100px', animation: 'slideInFromRight 0.8s ease 0.5s forwards', opacity: 0 }} />
           </div>
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', maxWidth: '1300px', margin: '0 auto' }}>
             {coordinators.map((c, i) => <PersonCard key={i} {...c} index={i + 4} />)}
